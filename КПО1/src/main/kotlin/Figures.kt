@@ -5,69 +5,66 @@ import kotlin.math.roundToInt
 abstract class GeometryObject(height: Int, baseLength: Int) {
     protected var _height: Int = 0
     protected var _baseLength: Int = 0
-    protected var _lateralProjection: Double = 0.0
-    protected var _aboveProjection: Double = 0.0
-    protected var _volume: Double = 0.0
 
     init {
         _height = height;
         _baseLength = baseLength;
     }
 
-    abstract fun findAboveProjection()
-    abstract fun findLateralProjection()
-    abstract fun findVolume()
+    abstract fun findAboveProjection(): Double
+    abstract fun findLateralProjection(): Double
+    abstract fun findVolume(): Double
 
     override fun toString(): String {
-        return "Объем ${this.javaClass.toString().split(" ")[1]}: ${_volume.roundToInt()}\n" +
-                "Площадь боковой проекции: ${_lateralProjection.roundToInt()}\n" +
-                "Площадь проекции сверху: ${_aboveProjection.roundToInt()}"
+        return "Объем ${this.javaClass.toString().split(" ")[1]}: ${findVolume().roundToInt()}\n" +
+                "Площадь боковой проекции: ${findLateralProjection().roundToInt()}\n" +
+                "Площадь проекции сверху: ${findAboveProjection().roundToInt()}"
     }
 }
 
 class Cone(height: Int, baseLength: Int) : GeometryObject(height, baseLength) {
 
-    override fun findAboveProjection() {
-        _aboveProjection = PI * _baseLength.toDouble().pow(2) / 4
+    override fun findAboveProjection(): Double {
+        return PI * _baseLength.toDouble().pow(2) / 4
     }
 
-    override fun findLateralProjection() {
-        _lateralProjection = _baseLength.toDouble() * _height / 2;
+    override fun findLateralProjection(): Double {
+        return _baseLength.toDouble() * _height / 2;
     }
 
-    override fun findVolume() {
-        _volume = PI * _baseLength.toDouble().pow(2) * _height / 12
+    override fun findVolume(): Double {
+        return PI * _baseLength.toDouble().pow(2) * _height / 12
     }
 }
 
 class Cube(height: Int, baseLength: Int) : GeometryObject(height, baseLength) {
 
-    override fun findAboveProjection() {
-        _aboveProjection = _baseLength.toDouble().pow(2)
+    override fun findAboveProjection(): Double {
+        return _baseLength.toDouble().pow(2)
     }
 
-    override fun findLateralProjection() {
-        _lateralProjection = _baseLength.toDouble().pow(2)
+    override fun findLateralProjection(): Double {
+        return _baseLength.toDouble().pow(2)
     }
 
-    override fun findVolume() {
-        _volume = _baseLength.toDouble().pow(3);
+    override fun findVolume(): Double {
+        return _baseLength.toDouble().pow(3);
     }
 
 }
 
 class Pyramid(height: Int, baseLength: Int) : GeometryObject(height, baseLength) {
 
-    override fun findAboveProjection() {
-        _aboveProjection = _baseLength.toDouble().pow(2)
+    override fun findAboveProjection(): Double {
+        return _baseLength.toDouble().pow(2)
     }
 
-    override fun findLateralProjection() {
-        _lateralProjection = _baseLength.toDouble() * _height / 2
+    override fun findLateralProjection(): Double {
+        return _baseLength.toDouble() * _height / 2
     }
 
-    override fun findVolume() {
-        _volume = _baseLength.toDouble().pow(2) * _height / 3
+    override fun findVolume(): Double {
+        return _baseLength.toDouble().pow(2) * _height / 3
     }
 
 }
@@ -83,25 +80,16 @@ fun main(args: Array<String>) {
     when (name) {
         "конус" -> {
             figure = Cone(height, baseLength)
-            figure.findAboveProjection()
-            figure.findLateralProjection()
-            figure.findVolume()
             println(figure)
         }
 
         "куб" -> {
             figure = Cube(height, baseLength)
-            figure.findAboveProjection()
-            figure.findLateralProjection()
-            figure.findVolume()
             println(figure)
         }
 
         "пирамида" -> {
             figure = Pyramid(height, baseLength)
-            figure.findAboveProjection()
-            figure.findLateralProjection()
-            figure.findVolume()
             println(figure)
         }
 
